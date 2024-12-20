@@ -1,0 +1,19 @@
+# GitHub workflow
+.github
+
+# Next.js build output
+.next
+build
+
+# Dependency directories
+node_modules
+
+# Misc
+public
+
+# Next type file
+next-env.d.ts
+
+# npm or yarn lock file
+package-lock.json
+yarn.lock

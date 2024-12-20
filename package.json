@@ -1,6 +1,7 @@
 {
   "name": "token-overview-dashboard",
   "version": "0.1.0",
+  "description": "Crypto token overview dashboard",
   "private": true,
   "scripts": {
     "dev": "next dev",
