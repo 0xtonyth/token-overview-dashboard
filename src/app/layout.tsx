@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 
+import Providers from "@/app/providers";
+import Layout from "@/components/layout/layout";
+
 import "./globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
 const geistSans = localFont({
   src: "../../public/fonts/GeistVF.woff",
@@ -25,12 +30,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookie = headers().get("cookie");
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gradient-to-r from-[#2b5876] to-[#4e4376] antialiased`}
       >
-        {children}
+        <Providers cookie={cookie}>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );
