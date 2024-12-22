@@ -12,12 +12,17 @@ import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
+import { shortenAddress } from "@/utils/shortenAddress";
+
+import profilePicture from "/public/images/defaults/profile-picture.jpg";
+
 const Header = () => {
   const { theme, setTheme } = useTheme();
 
   const pathname = usePathname();
   const router = useRouter();
   const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -78,7 +83,7 @@ const Header = () => {
                   <li className="">
                     <Link
                       href="/"
-                      className={`hover:text-primary ${pathname === "/" ? "text-primary" : "text-black"}`}
+                      className={`hover:text-primary ${pathname === "/" ? "text-white" : "text-black"}`}
                     >
                       Home
                     </Link>
@@ -91,76 +96,58 @@ const Header = () => {
                     <div className="relative">
                       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         <div className="relative ml-3">
-                          <div>
-                            <button
-                              type="button"
-                              className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-white"
-                              id="user-menu-button"
-                              aria-expanded={isOpen}
-                              aria-haspopup="true"
-                              onClick={toggleMenu}
-                            >
-                              <span className="absolute -inset-1.5"></span>
-                              <span className="sr-only">User Menu</span>
-                              {/* <Image
-                                  className="h-8 w-8 rounded-full"
-                                  src={profilePicture || defaultProfilePicture}
-                                  alt="Profile picture"
-                                  width={32}
-                                  height={32}
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.src = defaultProfilePicture;
-                                  }}
-                                /> */}
-                            </button>
-                          </div>
+                          <button
+                            type="button"
+                            className="relative flex rounded-full bg-white text-sm focus:outline-none"
+                            id="user-menu-button"
+                            aria-expanded={isOpen}
+                            aria-haspopup="true"
+                            onClick={toggleMenu}
+                          >
+                            <span className="absolute -inset-1.5"></span>
+                            <span className="sr-only">User Menu</span>
+                            <div className="flex flex-row">
+                              <Image
+                                className="h-10 w-10 rounded-full"
+                                src={profilePicture}
+                                alt="Profile picture"
+                                width={32}
+                                height={32}
+                              />
+                              <p className="mt-3 px-2 text-sm text-black">
+                                {shortenAddress(address as string, 5) || ""}
+                              </p>
+                            </div>
+                          </button>
 
                           {isOpen && (
                             <div
                               ref={menuRef}
-                              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-white ring-opacity-5 focus:outline-none"
+                              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg focus:outline-none"
                               role="menu"
                               aria-orientation="vertical"
                               aria-labelledby="user-menu-button"
                             >
-                              <div className="flex flex-col items-center">
-                                {/* <Image
-                                    className="h-20 w-20 rounded-full"
-                                    src={profilePicture || defaultProfilePicture}
-                                    alt="Profile picture"
-                                    width={32}
-                                    height={32}
-                                    onError={(e) => {
-                                      const target = e.target as HTMLImageElement;
-                                      target.src = defaultProfilePicture;
-                                    }}
-                                  /> */}
-                                <p>{address}</p>
+                              <div className="mt-3 flex flex-col items-center">
+                                <Image
+                                  className="h-20 w-20 rounded-full border-2 border-gray-300"
+                                  src={profilePicture}
+                                  alt="Profile picture"
+                                  width={32}
+                                  height={32}
+                                />
+                                <p className="mt-2 text-sm text-black">
+                                  {shortenAddress(address as string, 8) || ""}
+                                </p>
                               </div>
-
                               <a
-                                href={`/`}
-                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
+                                // href="#"
+                                className="block cursor-pointer px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
                                 role="menuitem"
+                                onClick={() => disconnect()}
                               >
-                                Profile
+                                Disconnect wallet
                               </a>
-                              <a
-                                href="#"
-                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
-                                role="menuitem"
-                              >
-                                Settings
-                              </a>
-                              {/* <a
-                                  // href="#"
-                                  className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black cursor-pointer"
-                                  role="menuitem"
-                                  onClick={signOut}
-                                >
-                                  Sign out
-                                </a> */}
                             </div>
                           )}
                         </div>

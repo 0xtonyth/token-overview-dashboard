@@ -14,7 +14,7 @@ const supportedChains: Chain[] = [
   arbitrum,
 ];
 
-export const config = getDefaultConfig({
+export const wagmiConfig = getDefaultConfig({
   appName: "WalletConnection",
   projectId,
   chains: supportedChains as any,
