@@ -25,7 +25,7 @@ const config: Config = {
           DEFAULT: "#2B5876",
         },
         white: "#FFFBF5",
-        black: "#202020",
+        black: "#121212",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
