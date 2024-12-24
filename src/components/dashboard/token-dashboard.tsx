@@ -25,7 +25,7 @@ type Props = {
   token_details: TokenDetails;
 };
 
-const Dashboard = ({ token_details }: Props) => {
+const TokenDashboard = ({ token_details }: Props) => {
   return (
     <>
       <div className="bg-primary_background flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
@@ -330,4 +330,4 @@ const Dashboard = ({ token_details }: Props) => {
   );
 };
 
-export default Dashboard;
+export default TokenDashboard;

@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 
 import { axiosInstance } from "@/libs/axios/axiosInstance";
 
-import Dashboard from "@/components/dashboard/dashboard";
+import TokenDashboard from "@/components/dashboard/token-dashboard";
 
 // export const dynamic = "force-dynamic";
 
@@ -86,5 +86,5 @@ export default async function TokenPage(context: any) {
     token_security: tokenSecurity,
   };
 
-  return <Dashboard token_details={tokenDetails} />;
+  return <TokenDashboard token_details={tokenDetails} />;
 }

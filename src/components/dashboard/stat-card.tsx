@@ -5,7 +5,7 @@ import { formatNumber } from "@/utils/formatNumber";
 type Props = {
   title: string;
   symbol: string;
-  value: string;
+  value: string | number;
 };
 
 const StatCard = ({ title, symbol, value }: Props) => {
