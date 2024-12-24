@@ -24,6 +24,15 @@ const config: Config = {
         secondary: {
           DEFAULT: "#2B5876",
         },
+        primary_background: {
+          DEFAULT: "#0B1217",
+        },
+        secondary_background: {
+          DEFAULT: "#142028",
+        },
+        primary_foreground: {
+          DEFAULT: "#23323C",
+        },
         white: "#FFFBF5",
         black: "#121212",
         background: "var(--background)",

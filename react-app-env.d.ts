@@ -1,8 +1,21 @@
 /// <reference types="react-scripts" />
 
-type TokenInfo = {
+type TokenDetails = {
   // Moralis API details
-  address: string;
+  token_data?: TokenData;
+
+  // GeckoTerminal API details
+  token_attributes?: TokenAttributes;
+  token_info?: TokenInfo;
+
+  // GoPlusLabs API details
+  token_security?: TokenSecurity;
+};
+
+type TokenData = {
+  // Moralis API details
+  // https://deep-index.moralis.io/api/v2.2/erc20/metadata?chain=${chain_id}&addresses%5B0%5D=${token_address}
+  address?: string;
   name?: string;
   symbol?: string;
   logo?: string | null;
@@ -17,31 +30,33 @@ type TokenInfo = {
     twitter?: string;
     website?: string;
   };
-
-  // GeckoTerminal API details
-  attributes?: {
-    // https://api.geckoterminal.com/api/v2/networks/{network}/tokens/{token_address}
-    price_usd?: string;
-    fdv_usd?: string;
-    total_reserve_in_usd?: string;
-    volume_usd?: {
-      h24?: string;
-    };
-    market_cap_usd?: string;
-
-    // https://api.geckoterminal.com/api/v2/networks/{network}/tokens/{token_address}/info
-    description?: string;
-    gt_score?: number;
-  };
-
-  token_security?: TokenSecurityInfo;
 };
 
-type TokenSecurityInfo = {
+type TokenAttributes = {
+  // GeckoTerminal API details
+  // https://api.geckoterminal.com/api/v2/networks/{network}/tokens/{token_address}
+  price_usd?: string;
+  fdv_usd?: string;
+  total_reserve_in_usd?: string;
+  volume_usd?: {
+    h24?: string;
+  };
+  market_cap_usd?: string;
+};
+
+type TokenInfo = {
+  // GeckoTerminal API details
+  // https://api.geckoterminal.com/api/v2/networks/{network}/tokens/{token_address}/info
+  description?: string;
+  gt_score?: number;
+};
+
+type TokenSecurity = {
   // GoPlusLabs API details
   // https://api.gopluslabs.io/api/v1/token_security/{chain_id}?contract_addresses={contract_address}
 
   // Returns "1" if Yes; "0" if No.
+  lp_total_supply?: string;
   holder_count?: string;
   is_in_dex?: string;
   buy_tax?: string; // Returns the buy tax of the token on a scale from 0 - 1. An empty string ("") means that the tax is unknown.

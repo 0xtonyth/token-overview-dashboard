@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-black antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-primary_background antialiased`}
       >
         <Providers cookie={cookie}>
           <Layout>{children}</Layout>
