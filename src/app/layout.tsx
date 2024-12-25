@@ -21,8 +21,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Token Dashboard",
-  description: "Crypto token overview dashboard",
+  title: "Token Dashboard — For crypto token overview",
+  description:
+    "Crypto token overview dashboard, get Ethereum tokens and pools overview",
 };
 
 export default function RootLayout({
