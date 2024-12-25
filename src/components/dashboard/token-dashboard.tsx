@@ -15,6 +15,7 @@ import {
 import { formatDecimal } from "@/utils/formatDecimal";
 import { formatNumber } from "@/utils/formatNumber";
 
+import Search from "@/components/common/search/search";
 import TokenChartWidget from "@/components/dashboard/token-chart-widget";
 import StatCard from "@/components/dashboard/stat-card";
 import SecurityStatCard from "@/components/dashboard/security-stat-card";
@@ -28,10 +29,11 @@ type Props = {
 const TokenDashboard = ({ token_details }: Props) => {
   return (
     <>
-      <div className="bg-primary_background flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
+      <div className="bg-primary_background mb-5 flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
         <div className="relative w-full">
           <div className="px-10 md:px-16 2xl:px-64">
             <div className="flex flex-col gap-3">
+              <Search />
               <div className="bg-secondary_background flex flex-col gap-3 rounded-xl px-3 py-2">
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center gap-3">

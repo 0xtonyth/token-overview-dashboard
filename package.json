@@ -12,6 +12,7 @@
     "format": "prettier --write \"./**/*.{tsx,ts,css}\""
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
     "@hookform/resolvers": "^3.3.4",
     "@rainbow-me/rainbowkit": "^2.2.1",
     "@tanstack/react-query": "^5.62.8",

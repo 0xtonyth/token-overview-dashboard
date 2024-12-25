@@ -33,6 +33,9 @@ const config: Config = {
         primary_foreground: {
           DEFAULT: "#23323C",
         },
+        secondary_foreground: {
+          DEFAULT: "#A7ADB1",
+        },
         white: "#FFFBF5",
         black: "#121212",
         background: "var(--background)",

@@ -15,6 +15,7 @@ import {
 import { formatDecimal } from "@/utils/formatDecimal";
 import { formatNumber } from "@/utils/formatNumber";
 
+import Search from "@/components/common/search/search";
 import PoolChartWidget from "@/components/dashboard/pool-chart-widget";
 import StatCard from "@/components/dashboard/stat-card";
 
@@ -27,32 +28,37 @@ type Props = {
 const PoolDashboard = ({ pool_details }: Props) => {
   return (
     <>
-      <div className="bg-primary_background flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
+      <div className="bg-primary_background mb-5 flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
         <div className="relative w-full">
           <div className="px-10 md:px-16 2xl:px-64">
             <div className="flex flex-col gap-3">
+              <Search />
               <div className="bg-secondary_background flex flex-col gap-3 rounded-xl px-3 py-2">
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center gap-3">
-                    {/* <Image
-                      // className="dark:invert"
-                      src={token_details.token_data?.logo!}
-                      alt={token_details.token_data?.symbol!}
-                      width={38}
-                      height={38}
-                      priority
-                    /> */}
+                    <div className="flex flex-col gap-2 md:flex-row">
+                      <Image
+                        // className="dark:invert"
+                        src={pool_details.base_token_info?.image_url!}
+                        alt={pool_details.base_token_info?.symbol!}
+                        width={38}
+                        height={38}
+                        priority
+                      />
+                      <Image
+                        // className="dark:invert"
+                        src={pool_details.quote_token_info?.image_url!}
+                        alt={pool_details.quote_token_info?.symbol!}
+                        width={38}
+                        height={38}
+                        priority
+                      />
+                    </div>
                     <div className="flex flex-col">
                       <div className="flex flex-row items-center gap-1">
                         <h1 className="text-xl font-bold">
                           {pool_details.pool_data?.attributes?.name!}
                         </h1>
-                        {/* {token_details.token_data?.verified_contract ? (
-                          <VerifiedBadge
-                            className="text-blue-300"
-                            size="1rem"
-                          />
-                        ) : null} */}
                       </div>
                       <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
                         <p className="text-xs font-medium">
@@ -211,14 +217,6 @@ const PoolDashboard = ({ pool_details }: Props) => {
                       address={pool_details.pool_info?.pairAddress!}
                     />
                   </div>
-                  {/* <div className="bg-secondary_background mt-3 w-full rounded-xl p-3">
-                    <h1 className="text-base font-bold">Token description</h1>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
-                      <p className="text-xs">
-                        {token_details.token_info?.description}
-                      </p>
-                    </div>
-                  </div> */}
                 </div>
               </div>
               <div className="flex w-full flex-col gap-5 text-white lg:flex-row">
