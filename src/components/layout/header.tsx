@@ -48,9 +48,9 @@ const Header = () => {
 
   return (
     <>
-      <header className="mb-2 px-4 shadow">
+      <header className="mb-2 px-4 font-[family-name:var(--font-geist-mono)]">
         <div className="relative mx-auto flex max-w-screen-xl flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
-          Token Dashboard
+          <p className="text-xl font-extrabold">TOKEN DASHBOARD</p>
           <input className="peer hidden" type="checkbox" id="navbar-open" />
           <label
             className="absolute right-0 mt-1 cursor-pointer text-xl sm:hidden"
@@ -78,27 +78,15 @@ const Header = () => {
               className={`mb-2 mt-2 flex flex-col gap-y-4 sm:flex-row ${isConnected ? "sm:gap-x-8" : "sm:gap-x-5"}`}
               // Temp conditional gap adjustment til Nav links changes to public
             >
-              {isConnected && (
-                <>
-                  <li className="">
-                    <Link
-                      href="/"
-                      className={`hover:text-primary ${pathname === "/" ? "text-white" : "text-black"}`}
-                    >
-                      Home
-                    </Link>
-                  </li>
-                </>
-              )}
               {isConnected ? (
                 <>
                   <li className="-mt-1">
                     <div className="relative">
                       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <div className="relative ml-3">
+                        <div className="relative ml-3 text-white">
                           <button
                             type="button"
-                            className="relative flex rounded-full bg-white text-sm focus:outline-none"
+                            className="bg-primary_foreground relative flex rounded-full text-sm focus:outline-none"
                             id="user-menu-button"
                             aria-expanded={isOpen}
                             aria-haspopup="true"
@@ -114,7 +102,7 @@ const Header = () => {
                                 width={32}
                                 height={32}
                               />
-                              <p className="mt-3 px-2 text-sm text-black">
+                              <p className="mt-3 px-2 text-sm">
                                 {shortenAddress(address as string, 5) || ""}
                               </p>
                             </div>
@@ -123,12 +111,12 @@ const Header = () => {
                           {isOpen && (
                             <div
                               ref={menuRef}
-                              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg focus:outline-none"
+                              className="bg-primary_foreground absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg focus:outline-none"
                               role="menu"
                               aria-orientation="vertical"
                               aria-labelledby="user-menu-button"
                             >
-                              <div className="mt-3 flex flex-col items-center">
+                              <div className="mt-3 flex flex-col items-center text-white">
                                 <Image
                                   className="h-20 w-20 rounded-full border-2 border-gray-300"
                                   src={profilePicture}
@@ -136,13 +124,13 @@ const Header = () => {
                                   width={32}
                                   height={32}
                                 />
-                                <p className="mt-2 text-sm text-black">
+                                <p className="mt-2 text-sm">
                                   {shortenAddress(address as string, 8) || ""}
                                 </p>
                               </div>
                               <a
                                 // href="#"
-                                className="block cursor-pointer px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
+                                className="mt-2 block cursor-pointer px-4 py-2 text-sm text-gray-400 transition-all duration-300 hover:bg-blue-200 hover:text-black"
                                 role="menuitem"
                                 onClick={() => disconnect()}
                               >
