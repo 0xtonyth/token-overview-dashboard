@@ -86,5 +86,20 @@ export default async function TokenPage(context: any) {
     token_security: tokenSecurity,
   };
 
-  return <TokenDashboard token_details={tokenDetails} />;
+  return (
+    <>
+      {tokenDetails.token_data?.address ? (
+        <TokenDashboard token_details={tokenDetails} />
+      ) : (
+        <>
+          <div className="-mt-14 flex min-h-screen flex-col items-center justify-center font-[family-name:var(--font-geist-mono)]">
+            <h1 className="text-5xl font-extrabold">Error!</h1>
+            <p className="text-center text-xl font-medium">
+              Possible invalid token address.
+            </p>
+          </div>
+        </>
+      )}
+    </>
+  );
 }

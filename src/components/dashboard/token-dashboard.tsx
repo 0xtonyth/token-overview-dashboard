@@ -31,6 +31,20 @@ type Props = {
 const TokenDashboard = ({ token_details }: Props) => {
   const { isConnected } = useAccount();
 
+  if (!isConnected) {
+    return (
+      <>
+        <div className="-mt-14 flex min-h-screen flex-col items-center justify-center font-[family-name:var(--font-geist-mono)]">
+          <h1 className="text-5xl font-extrabold">Error!</h1>
+          <p className="text-center text-lg font-medium">
+            Connect your wallet to view the token overview dashboard and search
+            tokens and pools by address.
+          </p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="bg-primary_background mb-5 flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
@@ -63,7 +77,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     <div className="flex flex-col">
                       <div className="flex flex-row items-center gap-1">
                         <h1 className="text-xl font-bold">
-                          {token_details.token_data?.name}
+                          {token_details.token_data?.name!}
                         </h1>
                         {token_details.token_data?.verified_contract ? (
                           <VerifiedBadge
@@ -73,17 +87,17 @@ const TokenDashboard = ({ token_details }: Props) => {
                         ) : null}
                       </div>
                       <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
-                        <p className="text-xs font-medium">
-                          {token_details.token_data?.symbol}
+                        <p className="text-xs font-medium text-blue-300">
+                          {token_details.token_data?.symbol!}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
-                    <p className="text-lg font-semibold">
+                    <p className="text-lg font-semibold text-blue-300">
                       $
                       {formatDecimal(
-                        Number(token_details.token_attributes?.price_usd)
+                        Number(token_details.token_attributes?.price_usd!)
                       )}
                     </p>
                   </div>
@@ -164,7 +178,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     <h1 className="text-base font-bold">Token details</h1>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
                       <p className="text-[10px] font-semibold">TOKEN ADDRESS</p>
-                      <p className="text-[10px] lg:text-[10px] xl:text-xs">
+                      <p className="text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
                         {token_details.token_data?.address?.toLocaleUpperCase()}
                       </p>
                     </div>
@@ -173,40 +187,54 @@ const TokenDashboard = ({ token_details }: Props) => {
                         <StatCard
                           title={"MARKET CAP"}
                           symbol={"$"}
-                          value={
-                            token_details.token_attributes?.market_cap_usd!
-                          }
+                          value={formatDecimal(
+                            Number(
+                              token_details.token_attributes?.market_cap_usd!
+                            )
+                          )}
                         />
                         <StatCard
                           title={"HOLDERS"}
                           symbol={""}
-                          value={token_details.token_security?.holder_count!}
+                          value={formatDecimal(
+                            Number(token_details.token_security?.holder_count!)
+                          )}
                         />
                         <StatCard
                           title={"TOTAL SUPPLY"}
                           symbol={"$"}
-                          value={
-                            token_details.token_data?.total_supply_formatted!
-                          }
+                          value={formatDecimal(
+                            Number(
+                              token_details.token_data?.total_supply_formatted!
+                            )
+                          )}
                         />
                         <StatCard
                           title={"FDV"}
                           symbol={"$"}
-                          value={
-                            token_details.token_data?.fully_diluted_valuation!
-                          }
+                          value={formatDecimal(
+                            Number(
+                              token_details.token_data?.fully_diluted_valuation!
+                            )
+                          )}
                         />
                         <StatCard
                           title={"LP SUPPLY"}
                           symbol={"$"}
-                          value={token_details.token_security?.lp_total_supply!}
+                          value={formatDecimal(
+                            Number(
+                              token_details.token_security?.lp_total_supply!
+                            )
+                          )}
                         />
                         <StatCard
                           title={"24H VOL"}
                           symbol={"$"}
-                          value={
-                            token_details.token_attributes?.volume_usd?.h24!
-                          }
+                          value={formatDecimal(
+                            Number(
+                              token_details.token_attributes?.volume_usd?.h24!
+                            )
+                          )}
                         />
                       </div>
                     </div>

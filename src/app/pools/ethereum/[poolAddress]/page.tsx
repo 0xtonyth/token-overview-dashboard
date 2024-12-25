@@ -63,5 +63,20 @@ export default async function PoolPage(context: any) {
     quote_token_info: quoteTokenInfo,
   };
 
-  return <PoolDashboard pool_details={poolDetails} />;
+  return (
+    <>
+      {poolDetails.pool_data?.attributes?.address ? (
+        <PoolDashboard pool_details={poolDetails} />
+      ) : (
+        <>
+          <div className="-mt-14 flex min-h-screen flex-col items-center justify-center font-[family-name:var(--font-geist-mono)]">
+            <h1 className="text-5xl font-extrabold">Error!</h1>
+            <p className="text-center text-xl font-medium">
+              Possible invalid pool address.
+            </p>
+          </div>
+        </>
+      )}
+    </>
+  );
 }
