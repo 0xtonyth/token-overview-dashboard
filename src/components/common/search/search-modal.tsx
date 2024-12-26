@@ -96,12 +96,7 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
 
   /* const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`${tokens}/ethereum/${address}`);
-
-      addToast({
-        type: "success",
-        message: `Copied link to clipboard`,
-      });
+      await navigator.clipboard.writeText(`${address}`);
 
       setCopied(true);
 
@@ -111,16 +106,8 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
     } catch (error: any) {
       if (error.response) {
         console.log("Error copying link to clipboard:", error.response.data);
-        addToast({
-          type: "error",
-          message: "Failed to copy link. Please try again!",
-        });
       } else {
         console.log("Error copying link to clipboard:", error.message);
-        addToast({
-          type: "error",
-          message: "Failed to copy link. Please try again!",
-        });
       }
     }
   }; */
@@ -143,7 +130,6 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
             <DialogPanel
-              // style={{ maxWidth: "70vw", width: "70vw" }}
               transition
               className="bg-primary_foreground relative min-h-[320px] w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl"
             >
@@ -202,7 +188,6 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                       <input
                         type="text"
                         name="search"
-                        // value={query}
                         onChange={handleSearchChange}
                         placeholder={`Search by ${selectedOption} address`}
                         className="h-10 w-full rounded-xl bg-gray-300 py-4 pl-10 pr-4 text-black outline-none lg:pl-12 lg:pr-40"
@@ -216,12 +201,10 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                           <div className="bg-secondary_foreground w-full rounded-lg px-3 py-2 text-black transition-all duration-200 hover:shadow-lg">
                             <Link
                               href={`/${searchResults[0].type === "token" ? "tokens" : "pools"}/ethereum/${searchResults[0].attributes.address}`}
-                              // target="_blank"
                             >
                               <div className="flex flex-row items-center gap-2">
                                 {searchResults[0].attributes.image_url ? (
                                   <Image
-                                    // className="dark:invert"
                                     src={searchResults[0].attributes.image_url!}
                                     alt={searchResults[0].attributes.symbol!}
                                     width={28}
@@ -258,7 +241,6 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                             strokeWidth="10"
                             r="35"
                             strokeDasharray="164.93361431346415 56.97787143782138"
-                            // opacity="0.5"
                           >
                             <animateTransform
                               attributeName="transform"

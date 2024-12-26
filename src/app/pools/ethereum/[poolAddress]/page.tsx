@@ -12,8 +12,6 @@ export default async function PoolPage(context: any) {
   const MORALIS_API_URL = process.env.NEXT_PUBLIC_MORALIS_API_URL;
 
   const NETWORK = "eth";
-  const CHAIN = "0x1";
-  const CHAIN_ID = "1";
   const POOL_ADDRESS: string = context.params.poolAddress.toLowerCase();
 
   const headers = {

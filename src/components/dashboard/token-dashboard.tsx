@@ -113,7 +113,6 @@ const TokenDashboard = ({ token_details }: Props) => {
                   <div className="flex flex-row items-center gap-3">
                     <div className="flex-shrink-0 rounded-full bg-white">
                       <Image
-                        // className="dark:invert"
                         src={token_details.token_data?.logo! ?? defaultToken}
                         alt={token_details.token_data?.symbol! ?? ""}
                         width={38}
@@ -313,7 +312,6 @@ const TokenDashboard = ({ token_details }: Props) => {
                 <div className="lg:w-2/3">
                   <div className="border-secondary_background bg-secondary_background h-[280px] overflow-hidden rounded-xl border-2 md:h-[420px]">
                     <TokenChartWidget
-                      // symbol={`ETHEREUM:${tokenDetails.symbol}USD`}
                       symbol={`${token_details.token_data?.symbol}`}
                       timeline={"D"}
                     />
