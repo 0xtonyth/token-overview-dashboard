@@ -26,6 +26,7 @@ export default async function TokenPage(context: any) {
   };
 
   let tokenData: TokenData = {};
+  let tokenPairData: TokenPairData[] = [];
   let tokenAttributes: TokenAttributes = {};
   let tokenInfo: TokenInfo = {};
   let tokenSecurity: TokenSecurity = {};
@@ -33,12 +34,17 @@ export default async function TokenPage(context: any) {
   try {
     const [
       tokenDataResponse,
+      tokenPairDataResponse,
       tokenAttributesResponse,
       tokenInfoResponse,
       tokenSecurityResponse,
     ] = await Promise.all([
       axiosInstance.get(
         `${MORALIS_API_URL}/erc20/metadata?chain=${NETWORK}&addresses%5B0%5D=${TOKEN_ADDRESS}`,
+        headers
+      ),
+      axiosInstance.get(
+        `${MORALIS_API_URL}/erc20/${TOKEN_ADDRESS}/pairs?chain=${NETWORK}&limit=10`,
         headers
       ),
       axiosInstance.get(
@@ -56,6 +62,12 @@ export default async function TokenPage(context: any) {
       tokenData = tokenDataResponse.data[0];
     } else {
       console.log("Error fetching token metadata from Moralis");
+    }
+
+    if (tokenPairDataResponse.status === 200) {
+      tokenPairData = tokenPairDataResponse.data.pairs;
+    } else {
+      console.log("Error fetching token pair data from Moralis");
     }
 
     if (tokenAttributesResponse.status === 200) {
@@ -81,6 +93,7 @@ export default async function TokenPage(context: any) {
 
   let tokenDetails: TokenDetails = {
     token_data: tokenData,
+    token_pair_data: tokenPairData,
     token_attributes: tokenAttributes,
     token_info: tokenInfo,
     token_security: tokenSecurity,

@@ -14,15 +14,17 @@ import {
   FaDiscord as Discord,
 } from "react-icons/fa6";
 
-import { formatDecimal } from "@/utils/formatDecimal";
-import { formatNumber } from "@/utils/formatNumber";
-
 import Search from "@/components/common/search/search";
 import TokenChartWidget from "@/components/dashboard/token-chart-widget";
 import StatCard from "@/components/dashboard/stat-card";
 import SecurityStatCard from "@/components/dashboard/security-stat-card";
+import TokenPoolTable from "@/components/dashboard/token-pool-table";
 
 import etherscanLogo from "/public/images/socials/etherscan.png";
+
+import { formatNumber } from "@/utils/formatNumber";
+
+const defaultToken = "/images/network/ethereum.png";
 
 type Props = {
   token_details: TokenDetails;
@@ -66,18 +68,20 @@ const TokenDashboard = ({ token_details }: Props) => {
               <div className="bg-secondary_background flex flex-col gap-3 rounded-xl px-3 py-2">
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center gap-3">
-                    <Image
-                      // className="dark:invert"
-                      src={token_details.token_data?.logo!}
-                      alt={token_details.token_data?.symbol!}
-                      width={38}
-                      height={38}
-                      priority
-                    />
+                    <div className="flex-shrink-0 rounded-full bg-white">
+                      <Image
+                        // className="dark:invert"
+                        src={token_details.token_data?.logo! ?? defaultToken}
+                        alt={token_details.token_data?.symbol! ?? ""}
+                        width={38}
+                        height={38}
+                        priority
+                      />
+                    </div>
                     <div className="flex flex-col">
                       <div className="flex flex-row items-center gap-1">
-                        <h1 className="text-xl font-bold">
-                          {token_details.token_data?.name!}
+                        <h1 className="text-lg font-bold lg:text-xl">
+                          {token_details.token_data?.name! ?? ""}
                         </h1>
                         {token_details.token_data?.verified_contract ? (
                           <VerifiedBadge
@@ -88,7 +92,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                       </div>
                       <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
                         <p className="text-xs font-medium text-blue-300">
-                          {token_details.token_data?.symbol!}
+                          {token_details.token_data?.symbol! ?? ""}
                         </p>
                       </div>
                     </div>
@@ -96,9 +100,9 @@ const TokenDashboard = ({ token_details }: Props) => {
                   <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
                     <p className="text-lg font-semibold text-blue-300">
                       $
-                      {formatDecimal(
+                      {formatNumber(
                         Number(token_details.token_attributes?.price_usd!)
-                      )}
+                      ) ?? ""}
                     </p>
                   </div>
                 </div>
@@ -166,7 +170,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     <p className="text-[10px] text-gray-200">SECURITY SCORE</p>
                     <div className="bg-primary_foreground rounded-lg px-3 py-1">
                       <p className="text-xs">
-                        {token_details.token_data?.security_score} / 100
+                        {token_details.token_data?.security_score ?? ""} / 100
                       </p>
                     </div>
                   </div>
@@ -179,7 +183,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
                       <p className="text-[10px] font-semibold">TOKEN ADDRESS</p>
                       <p className="text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
-                        {token_details.token_data?.address?.toLocaleUpperCase()}
+                        {token_details.token_data?.address!}
                       </p>
                     </div>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
@@ -187,54 +191,48 @@ const TokenDashboard = ({ token_details }: Props) => {
                         <StatCard
                           title={"MARKET CAP"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              token_details.token_attributes?.market_cap_usd!
-                            )
-                          )}
+                          value={
+                            token_details.token_attributes?.market_cap_usd! ??
+                            ""
+                          }
                         />
                         <StatCard
                           title={"HOLDERS"}
                           symbol={""}
-                          value={formatDecimal(
-                            Number(token_details.token_security?.holder_count!)
-                          )}
+                          value={
+                            token_details.token_security?.holder_count! ?? ""
+                          }
                         />
                         <StatCard
                           title={"TOTAL SUPPLY"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              token_details.token_data?.total_supply_formatted!
-                            )
-                          )}
+                          value={
+                            token_details.token_data?.total_supply_formatted! ??
+                            ""
+                          }
                         />
                         <StatCard
                           title={"FDV"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              token_details.token_data?.fully_diluted_valuation!
-                            )
-                          )}
+                          value={
+                            token_details.token_data
+                              ?.fully_diluted_valuation! ?? ""
+                          }
                         />
                         <StatCard
                           title={"LP SUPPLY"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              token_details.token_security?.lp_total_supply!
-                            )
-                          )}
+                          value={
+                            token_details.token_security?.lp_total_supply! ?? ""
+                          }
                         />
                         <StatCard
                           title={"24H VOL"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              token_details.token_attributes?.volume_usd?.h24!
-                            )
-                          )}
+                          value={
+                            token_details.token_attributes?.volume_usd?.h24! ??
+                            ""
+                          }
                         />
                       </div>
                     </div>
@@ -268,89 +266,60 @@ const TokenDashboard = ({ token_details }: Props) => {
                       />
                       <SecurityStatCard
                         title={"Cannot buy"}
-                        value={
-                          token_details.token_security?.cannot_buy
-                            ? token_details.token_security?.cannot_buy
-                            : ""
-                        }
+                        value={token_details.token_security?.cannot_buy ?? ""}
                       />
                       <SecurityStatCard
                         title={"Cannot sell all"}
                         value={
-                          token_details.token_security?.cannot_sell_all
-                            ? token_details.token_security?.cannot_sell_all
-                            : ""
+                          token_details.token_security?.cannot_sell_all ?? ""
                         }
                       />
                       <SecurityStatCard
                         title={"Is in trust list"}
-                        value={
-                          token_details.token_security?.trust_list
-                            ? token_details.token_security?.trust_list
-                            : ""
-                        }
+                        value={token_details.token_security?.trust_list ?? ""}
                       />
                       <SecurityStatCard
                         title={"Is honeypot"}
-                        value={
-                          token_details.token_security?.is_honeypot
-                            ? token_details.token_security?.is_honeypot
-                            : ""
-                        }
+                        value={token_details.token_security?.is_honeypot ?? ""}
                       />
                       <SecurityStatCard
                         title={"Is open source"}
                         value={
-                          token_details.token_security?.is_open_source
-                            ? token_details.token_security?.is_open_source
-                            : ""
+                          token_details.token_security?.is_open_source ?? ""
                         }
                       />
                       <SecurityStatCard
                         title={"Is proxy"}
-                        value={
-                          token_details.token_security?.is_proxy
-                            ? token_details.token_security?.is_proxy
-                            : ""
-                        }
+                        value={token_details.token_security?.is_proxy ?? ""}
                       />
                       <SecurityStatCard
                         title={"Is blacklisted"}
                         value={
-                          token_details.token_security?.is_blacklisted
-                            ? token_details.token_security?.is_blacklisted
-                            : ""
+                          token_details.token_security?.is_blacklisted ?? ""
                         }
                       />
                       <SecurityStatCard
                         title={"Transfer pausable"}
                         value={
-                          token_details.token_security?.transfer_pausable
-                            ? token_details.token_security?.transfer_pausable
-                            : ""
+                          token_details.token_security?.transfer_pausable ?? ""
                         }
                       />
                       <SecurityStatCard
                         title={"Selfdestruct"}
-                        value={
-                          token_details.token_security?.selfdestruct
-                            ? token_details.token_security?.selfdestruct
-                            : ""
-                        }
+                        value={token_details.token_security?.selfdestruct ?? ""}
                       />
                       <SecurityStatCard
                         title={"Owner can change balance"}
                         value={
-                          token_details.token_security?.owner_change_balance
-                            ? token_details.token_security?.owner_change_balance
-                            : ""
+                          token_details.token_security?.owner_change_balance ??
+                          ""
                         }
                       />
                     </div>
                   </div>
                 </div>
                 <div className="lg:w-2/3">
-                  <div className="border-secondary_background bg-secondary_background h-[420px] overflow-hidden rounded-xl border-2">
+                  <div className="border-secondary_background bg-secondary_background h-[280px] overflow-hidden rounded-xl border-2 md:h-[420px]">
                     <TokenChartWidget
                       // symbol={`ETHEREUM:${tokenDetails.symbol}USD`}
                       symbol={`${token_details.token_data?.symbol}`}
@@ -359,12 +328,29 @@ const TokenDashboard = ({ token_details }: Props) => {
                   </div>
                   <div className="bg-secondary_background mt-3 w-full rounded-xl p-3">
                     <h1 className="text-base font-bold">Token description</h1>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="bg-primary_foreground mt-2 min-h-[120px] rounded-xl p-2 lg:min-h-[190px] xl:min-h-[180px] 2xl:min-h-[192px]">
                       <p className="text-xs">
                         {token_details.token_info?.description}
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="bg-secondary_background w-full rounded-xl p-3">
+                <h1 className="text-base font-bold">
+                  Token pool pairs — [Top 10]
+                </h1>
+                <div className="mt-2 flex flex-col gap-2">
+                  {token_details.token_pair_data?.length ? (
+                    <TokenPoolTable
+                      token_pair_data={token_details.token_pair_data}
+                    />
+                  ) : (
+                    <p className="text-center text-sm font-light">
+                      {token_details.token_data?.symbol!} does not have any
+                      token pool pairs
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

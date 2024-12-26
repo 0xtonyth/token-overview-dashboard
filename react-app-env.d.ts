@@ -3,6 +3,7 @@
 type TokenDetails = {
   // Moralis API details
   token_data?: TokenData;
+  token_pair_data?: TokenPairData[];
 
   // GeckoTerminal API details
   token_attributes?: TokenAttributes;
@@ -30,6 +31,19 @@ type TokenData = {
     twitter?: string;
     website?: string;
   };
+};
+
+type TokenPairData = {
+  // Moralis API details
+  // https://deep-index.moralis.io/api/v2.2/erc20/{token_address}/pairs?chain={chain_id}&limit=10
+  exchange_name?: string;
+  exchange_logo?: string;
+  pair_label?: string;
+  pair_address?: string;
+  usd_price_24hr_percent_change?: number;
+  usd_price_24hr_usd_change?: number;
+  liquidity_usd?: number;
+  volume_24h_usd?: number;
 };
 
 type TokenAttributes = {
@@ -133,6 +147,8 @@ type PoolInfo = {
 };
 
 type PoolTokenInfo = {
+  // GeckoTerminal API details
+  // https://api.geckoterminal.com/api/v2/networks/{network}/pools/{pool_address}?include=base_token%2C%20quote_token
   address?: string;
   name?: string;
   symbol?: string;

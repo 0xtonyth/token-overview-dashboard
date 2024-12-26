@@ -1,11 +1,15 @@
 export const formatNumber = (number: number): string => {
-  if (number >= 1000000000) {
-    return (number / 1000000000).toFixed(1) + "B";
-  } else if (number >= 1000000) {
-    return (number / 1000000).toFixed(1) + "M";
-  } else if (number >= 1000) {
-    return (number / 1000).toFixed(1) + "K";
+  const fixedNumber = number.toFixed(4);
+
+  const formattedNumber = parseFloat(fixedNumber);
+
+  if (formattedNumber >= 1000000000) {
+    return (formattedNumber / 1000000000).toFixed(1) + "B";
+  } else if (formattedNumber >= 1000000) {
+    return (formattedNumber / 1000000).toFixed(1) + "M";
+  } else if (formattedNumber >= 1000) {
+    return (formattedNumber / 1000).toFixed(1) + "K";
   } else {
-    return number.toString();
+    return formattedNumber.toString();
   }
 };

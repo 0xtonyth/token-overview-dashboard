@@ -5,23 +5,18 @@ import Link from "next/link";
 
 import { useAccount } from "wagmi";
 
-import { RiVerifiedBadgeLine as VerifiedBadge } from "react-icons/ri";
-import {
-  FaGlobe as Website,
-  FaTelegram as Telegram,
-  FaXTwitter as X,
-  FaReddit as Reddit,
-  FaDiscord as Discord,
-} from "react-icons/fa6";
-
-import { formatDecimal } from "@/utils/formatDecimal";
-import { formatNumber } from "@/utils/formatNumber";
+import { FaGlobe as Website } from "react-icons/fa6";
 
 import Search from "@/components/common/search/search";
 import PoolChartWidget from "@/components/dashboard/pool-chart-widget";
 import StatCard from "@/components/dashboard/stat-card";
 
+import { formatNumber } from "@/utils/formatNumber";
+
 import etherscanLogo from "/public/images/socials/etherscan.png";
+
+const defaultNetwork = "/images/network/ethereum.png";
+const defaultToken = "/images/network/ethereum.png";
 
 type Props = {
   pool_details: PoolDetails;
@@ -66,32 +61,40 @@ const PoolDashboard = ({ pool_details }: Props) => {
                 <div className="flex flex-row justify-between">
                   <div className="flex flex-row items-center gap-3">
                     <div className="flex flex-col gap-2 md:flex-row">
-                      <Image
-                        // className="dark:invert"
-                        src={pool_details.base_token_info?.image_url!}
-                        alt={pool_details.base_token_info?.symbol!}
-                        width={38}
-                        height={38}
-                        priority
-                      />
-                      <Image
-                        // className="dark:invert"
-                        src={pool_details.quote_token_info?.image_url!}
-                        alt={pool_details.quote_token_info?.symbol!}
-                        width={38}
-                        height={38}
-                        priority
-                      />
+                      <div className="flex-shrink-0 rounded-full bg-white">
+                        <Image
+                          src={
+                            pool_details.base_token_info?.image_url! ??
+                            defaultToken
+                          }
+                          alt={pool_details.base_token_info?.symbol! ?? ""}
+                          width={38}
+                          height={38}
+                          priority
+                        />
+                      </div>
+                      <div className="flex-shrink-0 rounded-full bg-white">
+                        <Image
+                          src={
+                            pool_details.quote_token_info?.image_url! ??
+                            defaultToken
+                          }
+                          alt={pool_details.quote_token_info?.symbol! ?? ""}
+                          width={38}
+                          height={38}
+                          priority
+                        />
+                      </div>
                     </div>
                     <div className="flex flex-col">
                       <div className="flex flex-row items-center gap-1">
-                        <h1 className="text-xl font-bold">
-                          {pool_details.pool_data?.attributes?.name!}
+                        <h1 className="text-lg font-bold lg:text-xl">
+                          {pool_details.pool_data?.attributes?.name! ?? ""}
                         </h1>
                       </div>
                       <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
                         <p className="text-xs font-medium text-blue-300">
-                          {pool_details.pool_info?.pairLabel!}
+                          {pool_details.pool_info?.pairLabel! ?? ""}
                         </p>
                       </div>
                     </div>
@@ -99,30 +102,30 @@ const PoolDashboard = ({ pool_details }: Props) => {
                   <div className="flex flex-col gap-2 md:flex-row">
                     <div className="bg-primary_foreground flex flex-col justify-center rounded-xl px-2">
                       <p className="text-[10px]">
-                        {pool_details.base_token_info?.symbol!}
+                        {pool_details.base_token_info?.symbol! ?? ""}
                       </p>
                       <p className="text-lg font-semibold text-blue-300">
                         $
-                        {formatDecimal(
+                        {formatNumber(
                           Number(
                             pool_details.pool_data?.attributes
                               ?.base_token_price_usd!
                           )
-                        )}
+                        ) ?? ""}
                       </p>
                     </div>
                     <div className="bg-primary_foreground flex flex-col justify-center rounded-xl px-2">
                       <p className="text-[10px]">
-                        {pool_details.quote_token_info?.symbol!}
+                        {pool_details.quote_token_info?.symbol! ?? ""}
                       </p>
                       <p className="text-lg font-semibold text-blue-300">
                         $
-                        {formatDecimal(
+                        {formatNumber(
                           Number(
                             pool_details.pool_data?.attributes
                               ?.quote_token_price_usd!
                           )
-                        )}
+                        ) ?? ""}
                       </p>
                     </div>
                   </div>
@@ -136,7 +139,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                       <Image
                         className="h-4 w-4 rounded-full"
                         src={etherscanLogo}
-                        alt="Etherscan"
+                        alt={"Etherscan"}
                         width={32}
                         height={32}
                       />
@@ -157,14 +160,18 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         {pool_details.pool_info?.exchange!}
                       </p>
                     </div>
-                    <Image
-                      // className="dark:invert"
-                      src={pool_details.pool_info?.exchangeLogo!}
-                      alt={pool_details.pool_info?.exchange!}
-                      width={24}
-                      height={24}
-                      priority
-                    />
+                    <div className="flex-shrink-0 rounded-full bg-white">
+                      <Image
+                        src={
+                          pool_details.pool_info?.exchangeLogo! ??
+                          defaultNetwork
+                        }
+                        alt={pool_details.pool_info?.exchange! ?? ""}
+                        width={24}
+                        height={24}
+                        priority
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -175,7 +182,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
                       <p className="text-[10px] font-semibold">POOL ADDRESS</p>
                       <p className="text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
-                        {pool_details.pool_info?.pairAddress?.toLocaleUpperCase()}
+                        {pool_details.pool_info?.pairAddress!}
                       </p>
                     </div>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
@@ -183,56 +190,46 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         <StatCard
                           title={"MARKET CAP"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              pool_details.pool_data?.attributes
-                                ?.market_cap_usd!
-                            )
-                          )}
+                          value={
+                            pool_details.pool_data?.attributes
+                              ?.market_cap_usd! ?? ""
+                          }
                         />
                         <StatCard
                           title={"LIQUIDITY"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(pool_details.pool_info?.totalLiquidityUsd!)
-                          )}
+                          value={
+                            pool_details.pool_info?.totalLiquidityUsd! ?? ""
+                          }
                         />
                         <StatCard
                           title={"FDV"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(pool_details.pool_data?.attributes?.fdv_usd!)
-                          )}
+                          value={pool_details.pool_data?.attributes?.fdv_usd!}
                         />
                         <StatCard
                           title={"24H VOL"}
                           symbol={"$"}
-                          value={formatDecimal(
-                            Number(
-                              pool_details.pool_data?.attributes?.volume_usd
-                                ?.h24!
-                            )
-                          )}
+                          value={
+                            pool_details.pool_data?.attributes?.volume_usd
+                              ?.h24! ?? ""
+                          }
                         />
                         <StatCard
                           title={"24H BUYS"}
                           symbol={""}
-                          value={formatDecimal(
-                            Number(
-                              pool_details.pool_data?.attributes?.transactions
-                                ?.h24?.buys!
-                            )
-                          )}
+                          value={
+                            pool_details.pool_data?.attributes?.transactions
+                              ?.h24?.buys! ?? ""
+                          }
                         />
                         <StatCard
                           title={"24H SELLS"}
                           symbol={""}
-                          value={formatDecimal(
-                            Number(
-                              pool_details.pool_data?.attributes?.transactions
-                                ?.h24?.sells!
-                            )
-                          )}
+                          value={
+                            pool_details.pool_data?.attributes?.transactions
+                              ?.h24?.sells! ?? ""
+                          }
                         />
                       </div>
                     </div>
@@ -241,19 +238,21 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         <StatCard
                           title={"24H PRICE CHANGE PERCENT"}
                           symbol={""}
-                          value={formatDecimal(
-                            pool_details.pool_info?.pricePercentChange?.["24h"]!
-                          )}
+                          value={
+                            pool_details.pool_info?.pricePercentChange?.[
+                              "24h"
+                            ]! ?? ""
+                          }
                           optional={"%"}
                         />
                         <StatCard
                           title={"24H LIQUIDITY CHANGE PERCENT"}
                           symbol={""}
-                          value={formatDecimal(
+                          value={
                             pool_details.pool_info?.liquidityPercentChange?.[
                               "24h"
-                            ]!
-                          )}
+                            ]! ?? ""
+                          }
                           optional={"%"}
                         />
                       </div>
@@ -276,23 +275,27 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         href={`/tokens/ethereum/${pool_details.base_token_info?.address!}`}
                       >
                         <div className="flex flex-row items-center gap-3">
-                          <Image
-                            // className="dark:invert"
-                            src={pool_details.base_token_info?.image_url!}
-                            alt={pool_details.base_token_info?.symbol!}
-                            width={38}
-                            height={38}
-                            priority
-                          />
+                          <div className="flex-shrink-0 rounded-full bg-white">
+                            <Image
+                              src={
+                                pool_details.base_token_info?.image_url! ??
+                                defaultToken
+                              }
+                              alt={pool_details.base_token_info?.symbol! ?? ""}
+                              width={38}
+                              height={38}
+                              priority
+                            />
+                          </div>
                           <div className="flex flex-col">
                             <div className="flex flex-row items-center gap-1">
                               <h1 className="text-xl font-bold">
-                                {pool_details.base_token_info?.name!}
+                                {pool_details.base_token_info?.name! ?? ""}
                               </h1>
                             </div>
                             <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
                               <p className="text-xs font-medium text-blue-300">
-                                {pool_details.base_token_info?.symbol!}
+                                {pool_details.base_token_info?.symbol! ?? ""}
                               </p>
                             </div>
                           </div>
@@ -301,19 +304,19 @@ const PoolDashboard = ({ pool_details }: Props) => {
                       <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
                         <p className="text-lg font-semibold text-blue-300">
                           $
-                          {formatDecimal(
+                          {formatNumber(
                             Number(
                               pool_details.pool_data?.attributes
                                 ?.base_token_price_usd!
                             )
-                          )}
+                          ) ?? ""}
                         </p>
                       </div>
                     </div>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
                       <p className="text-xs font-semibold">TOKEN ADDRESS</p>
                       <p className="mt-2 text-xs text-blue-300">
-                        {pool_details.base_token_info?.address!.toLocaleUpperCase()}
+                        {pool_details.base_token_info?.address!}
                       </p>
                     </div>
                     <div className="border-primary_foreground mt-2 rounded-xl border-[1px] p-2">
@@ -341,23 +344,27 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         href={`/tokens/ethereum/${pool_details.quote_token_info?.address!}`}
                       >
                         <div className="flex flex-row items-center gap-3">
-                          <Image
-                            // className="dark:invert"
-                            src={pool_details.quote_token_info?.image_url!}
-                            alt={pool_details.quote_token_info?.symbol!}
-                            width={38}
-                            height={38}
-                            priority
-                          />
+                          <div className="flex-shrink-0 rounded-full bg-white">
+                            <Image
+                              src={
+                                pool_details.quote_token_info?.image_url! ??
+                                defaultToken
+                              }
+                              alt={pool_details.quote_token_info?.symbol! ?? ""}
+                              width={38}
+                              height={38}
+                              priority
+                            />
+                          </div>
                           <div className="flex flex-col">
                             <div className="flex flex-row items-center gap-1">
                               <h1 className="text-xl font-bold">
-                                {pool_details.quote_token_info?.name!}
+                                {pool_details.quote_token_info?.name! ?? ""}
                               </h1>
                             </div>
                             <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
                               <p className="text-xs font-medium text-blue-300">
-                                {pool_details.quote_token_info?.symbol!}
+                                {pool_details.quote_token_info?.symbol! ?? ""}
                               </p>
                             </div>
                           </div>
@@ -366,19 +373,19 @@ const PoolDashboard = ({ pool_details }: Props) => {
                       <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
                         <p className="text-lg font-semibold text-blue-300">
                           $
-                          {formatDecimal(
+                          {formatNumber(
                             Number(
                               pool_details.pool_data?.attributes
                                 ?.quote_token_price_usd!
                             )
-                          )}
+                          ) ?? ""}
                         </p>
                       </div>
                     </div>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
                       <p className="text-xs font-semibold">TOKEN ADDRESS</p>
                       <p className="mt-2 text-xs text-blue-300">
-                        {pool_details.quote_token_info?.address!.toLocaleUpperCase()}
+                        {pool_details.quote_token_info?.address!}
                       </p>
                     </div>
                     <div className="border-primary_foreground mt-2 rounded-xl border-[1px] p-2">
