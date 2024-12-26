@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  FaCircleCheck as Check,
-  FaCircleXmark as XMark,
+  FaCheck as Check,
+  FaXmark as XMark,
   FaCircleExclamation as Unknown,
 } from "react-icons/fa6";
 
@@ -20,17 +20,17 @@ const SecurityStatCard = ({ title, value }: Props) => {
           <>
             {value === "1" ? (
               <>
-                <Check className="text-green-500" size="1rem" />
+                <Check className="text-blue-300" size="1rem" />
               </>
             ) : (
               <>
-                <XMark className="text-red-500" size="1rem" />
+                <XMark className="text-blue-300" size="1rem" />
               </>
             )}
           </>
         ) : (
           <>
-            <Unknown className="text-yellow-500" size="1rem" />
+            <Unknown className="text-blue-300" size="1rem" />
           </>
         )}
       </div>

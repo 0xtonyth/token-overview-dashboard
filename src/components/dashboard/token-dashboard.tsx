@@ -33,6 +33,49 @@ type Props = {
 const TokenDashboard = ({ token_details }: Props) => {
   const { isConnected } = useAccount();
 
+  const tokenSecurityStats = [
+    {
+      title: "Is in DEX",
+      value: token_details.token_security?.is_in_dex ?? "",
+    },
+    {
+      title: "Cannot buy",
+      value: token_details.token_security?.cannot_buy ?? "",
+    },
+    {
+      title: "Cannot sell all",
+      value: token_details.token_security?.cannot_sell_all ?? "",
+    },
+    {
+      title: "Is in trust list",
+      value: token_details.token_security?.trust_list ?? "",
+    },
+    {
+      title: "Is honeypot",
+      value: token_details.token_security?.is_honeypot ?? "",
+    },
+    {
+      title: "Is open source",
+      value: token_details.token_security?.is_open_source ?? "",
+    },
+    {
+      title: "Is proxy",
+      value: token_details.token_security?.is_proxy ?? "",
+    },
+    {
+      title: "Transfer pausable",
+      value: token_details.token_security?.transfer_pausable ?? "",
+    },
+    {
+      title: "Selfdestruct",
+      value: token_details.token_security?.selfdestruct ?? "",
+    },
+    {
+      title: "Owner can change balance",
+      value: token_details.token_security?.owner_change_balance ?? "",
+    },
+  ];
+
   if (!isConnected) {
     return (
       <>
@@ -122,7 +165,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     </Link>
                     {token_details.token_data?.links?.website && (
                       <Link
-                        className="text-white"
+                        className="text-gray-400"
                         href={token_details.token_data?.links?.website!}
                         target="_blank"
                       >
@@ -131,7 +174,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     )}
                     {token_details.token_data?.links?.twitter && (
                       <Link
-                        className="text-white"
+                        className="text-gray-400"
                         href={token_details.token_data?.links?.twitter!}
                         target="_blank"
                       >
@@ -140,7 +183,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     )}
                     {token_details.token_data?.links?.discord && (
                       <Link
-                        className="text-[#5865F2]"
+                        className="text-gray-400"
                         href={token_details.token_data?.links?.discord!}
                         target="_blank"
                       >
@@ -149,7 +192,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     )}
                     {token_details.token_data?.links?.telegram && (
                       <Link
-                        className="text-[#0088CC]"
+                        className="text-gray-400"
                         href={token_details.token_data?.links?.telegram!}
                         target="_blank"
                       >
@@ -158,7 +201,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                     )}
                     {token_details.token_data?.links?.reddit && (
                       <Link
-                        className="text-[#FF5700]"
+                        className="text-gray-400"
                         href={token_details.token_data?.links?.reddit!}
                         target="_blank"
                       >
@@ -256,65 +299,14 @@ const TokenDashboard = ({ token_details }: Props) => {
                       Token security details
                     </h1>
                     <div className="bg-primary_foreground mt-2 rounded-xl p-2">
-                      <SecurityStatCard
-                        title={"Is in DEX"}
-                        value={
-                          token_details.token_security?.is_in_dex
-                            ? token_details.token_security?.is_in_dex
-                            : ""
-                        }
-                      />
-                      <SecurityStatCard
-                        title={"Cannot buy"}
-                        value={token_details.token_security?.cannot_buy ?? ""}
-                      />
-                      <SecurityStatCard
-                        title={"Cannot sell all"}
-                        value={
-                          token_details.token_security?.cannot_sell_all ?? ""
-                        }
-                      />
-                      <SecurityStatCard
-                        title={"Is in trust list"}
-                        value={token_details.token_security?.trust_list ?? ""}
-                      />
-                      <SecurityStatCard
-                        title={"Is honeypot"}
-                        value={token_details.token_security?.is_honeypot ?? ""}
-                      />
-                      <SecurityStatCard
-                        title={"Is open source"}
-                        value={
-                          token_details.token_security?.is_open_source ?? ""
-                        }
-                      />
-                      <SecurityStatCard
-                        title={"Is proxy"}
-                        value={token_details.token_security?.is_proxy ?? ""}
-                      />
-                      <SecurityStatCard
-                        title={"Is blacklisted"}
-                        value={
-                          token_details.token_security?.is_blacklisted ?? ""
-                        }
-                      />
-                      <SecurityStatCard
-                        title={"Transfer pausable"}
-                        value={
-                          token_details.token_security?.transfer_pausable ?? ""
-                        }
-                      />
-                      <SecurityStatCard
-                        title={"Selfdestruct"}
-                        value={token_details.token_security?.selfdestruct ?? ""}
-                      />
-                      <SecurityStatCard
-                        title={"Owner can change balance"}
-                        value={
-                          token_details.token_security?.owner_change_balance ??
-                          ""
-                        }
-                      />
+                      {tokenSecurityStats.map((security_stat, index) => (
+                        <div key={index}>
+                          <SecurityStatCard
+                            title={security_stat.title}
+                            value={security_stat.value}
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

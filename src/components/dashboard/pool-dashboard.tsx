@@ -146,7 +146,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                     </Link>
                     {pool_details.pool_info?.exchangeUrl && (
                       <Link
-                        className="text-white"
+                        className="text-gray-400"
                         href={pool_details.pool_info?.exchangeUrl!}
                         target="_blank"
                       >
