@@ -320,10 +320,12 @@ const PoolDashboard = ({ pool_details }: Props) => {
                                 {pool_details.base_token_info?.name! ?? ""}
                               </div>
                             </div>
-                            <div className="flex max-w-[50%] items-center justify-center rounded-md bg-primary_foreground p-[1px]">
-                              <p className="text-xs font-medium text-blue-300">
-                                {pool_details.base_token_info?.symbol! ?? ""}
-                              </p>
+                            <div className="flex">
+                              <div className="items-center justify-center rounded-md bg-primary_foreground px-4">
+                                <p className="text-xs font-medium text-blue-300">
+                                  {pool_details.base_token_info?.symbol! ?? ""}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -402,10 +404,12 @@ const PoolDashboard = ({ pool_details }: Props) => {
                                 {pool_details.quote_token_info?.name! ?? ""}
                               </div>
                             </div>
-                            <div className="flex max-w-[50%] items-center justify-center rounded-md bg-primary_foreground p-[1px]">
-                              <p className="text-xs font-medium text-blue-300">
-                                {pool_details.quote_token_info?.symbol! ?? ""}
-                              </p>
+                            <div className="flex">
+                              <div className="items-center justify-center rounded-md bg-primary_foreground px-4">
+                                <p className="text-xs font-medium text-blue-300">
+                                  {pool_details.quote_token_info?.symbol! ?? ""}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
