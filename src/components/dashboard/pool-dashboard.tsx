@@ -41,7 +41,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
 
   return (
     <>
-      <div className="bg-primary_background mb-5 flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
+      <div className="mb-5 flex min-h-screen w-full items-start justify-start bg-primary_background font-[family-name:var(--font-geist-mono)] text-base text-white">
         <div className="relative w-full">
           <div className="px-10 md:px-16 2xl:px-64">
             <div className="flex flex-col gap-3">
@@ -57,8 +57,8 @@ const PoolDashboard = ({ pool_details }: Props) => {
                   </div>
                 </>
               )}
-              <div className="bg-secondary_background flex flex-col gap-3 rounded-xl px-3 py-2">
-                <div className="flex flex-row justify-between">
+              <div className="flex flex-col gap-3 rounded-xl bg-secondary_background px-3 py-2">
+                <div className="flex flex-row justify-between gap-3">
                   <div className="flex flex-row items-center gap-3">
                     <div className="flex flex-col gap-2 md:flex-row">
                       <div className="flex-shrink-0 rounded-full bg-white">
@@ -92,15 +92,17 @@ const PoolDashboard = ({ pool_details }: Props) => {
                           {pool_details.pool_data?.attributes?.name! ?? ""}
                         </h1>
                       </div>
-                      <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
-                        <p className="text-xs font-medium text-blue-300">
-                          {pool_details.pool_info?.pairLabel! ?? ""}
-                        </p>
+                      <div className="flex">
+                        <div className="items-center justify-center rounded-md bg-primary_foreground px-4 py-1">
+                          <p className="text-xs font-medium text-blue-300">
+                            {pool_details.pool_info?.pairLabel! ?? ""}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 md:flex-row">
-                    <div className="bg-primary_foreground flex flex-col justify-center rounded-xl px-2">
+                    <div className="flex flex-col justify-center rounded-xl bg-primary_foreground px-2">
                       <p className="text-[10px]">
                         {pool_details.base_token_info?.symbol! ?? ""}
                       </p>
@@ -114,7 +116,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                         ) ?? ""}
                       </p>
                     </div>
-                    <div className="bg-primary_foreground flex flex-col justify-center rounded-xl px-2">
+                    <div className="flex flex-col justify-center rounded-xl bg-primary_foreground px-2">
                       <p className="text-[10px]">
                         {pool_details.quote_token_info?.symbol! ?? ""}
                       </p>
@@ -130,7 +132,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                     </div>
                   </div>
                 </div>
-                <div className="border-primary_foreground flex items-center justify-between rounded-lg border-[1px] px-3 py-2">
+                <div className="flex items-center justify-between rounded-lg border-[1px] border-primary_foreground px-3 py-2">
                   <div className="flex flex-row gap-2">
                     <Link
                       href={`https://etherscan.io/token/${pool_details.pool_info?.pairAddress!}`}
@@ -155,7 +157,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                     )}
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
-                    <div className="bg-primary_foreground rounded-lg px-3 py-1">
+                    <div className="rounded-lg bg-primary_foreground px-3 py-1">
                       <p className="text-xs">
                         {pool_details.pool_info?.exchange!}
                       </p>
@@ -177,63 +179,83 @@ const PoolDashboard = ({ pool_details }: Props) => {
               </div>
               <div className="flex w-full flex-col gap-5 text-white lg:flex-row">
                 <div className="lg:w-1/3">
-                  <div className="bg-secondary_background h-full w-full rounded-xl p-3">
+                  <div className="h-full w-full rounded-xl bg-secondary_background p-3">
                     <h1 className="text-base font-bold">Pool details</h1>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
-                      <p className="text-[10px] font-semibold">POOL ADDRESS</p>
-                      <p className="text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
+                      <p className="text-xs font-semibold">POOL ADDRESS</p>
+                      <p className="line-clamp-1 text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
                         {pool_details.pool_info?.pairAddress!}
                       </p>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
                         <StatCard
                           title={"MARKET CAP"}
                           symbol={"$"}
                           value={
                             pool_details.pool_data?.attributes
-                              ?.market_cap_usd! ?? ""
+                              ?.market_cap_usd! ?? "0"
                           }
+                          helper={`$${
+                            pool_details.pool_data?.attributes
+                              ?.market_cap_usd! ?? "-"
+                          }`}
                         />
                         <StatCard
                           title={"LIQUIDITY"}
                           symbol={"$"}
                           value={
-                            pool_details.pool_info?.totalLiquidityUsd! ?? ""
+                            pool_details.pool_info?.totalLiquidityUsd! ?? "0"
                           }
+                          helper={`$${pool_details.pool_info?.totalLiquidityUsd! ?? "-"}`}
                         />
                         <StatCard
                           title={"FDV"}
                           symbol={"$"}
-                          value={pool_details.pool_data?.attributes?.fdv_usd!}
+                          value={
+                            pool_details.pool_data?.attributes?.fdv_usd! ?? "0"
+                          }
+                          helper={`$${pool_details.pool_data?.attributes?.fdv_usd! ?? "-"}`}
                         />
                         <StatCard
                           title={"24H VOL"}
                           symbol={"$"}
                           value={
                             pool_details.pool_data?.attributes?.volume_usd
-                              ?.h24! ?? ""
+                              ?.h24! ?? "0"
                           }
+                          helper={`$${
+                            pool_details.pool_data?.attributes?.volume_usd
+                              ?.h24! ?? "-"
+                          }`}
                         />
                         <StatCard
                           title={"24H BUYS"}
                           symbol={""}
                           value={
                             pool_details.pool_data?.attributes?.transactions
-                              ?.h24?.buys! ?? ""
+                              ?.h24?.buys! ?? "0"
                           }
+                          helper={`${
+                            pool_details.pool_data?.attributes?.transactions
+                              ?.h24?.buys! ?? "-"
+                          }`}
                         />
                         <StatCard
                           title={"24H SELLS"}
                           symbol={""}
                           value={
                             pool_details.pool_data?.attributes?.transactions
-                              ?.h24?.sells! ?? ""
+                              ?.h24?.sells! ?? "0"
                           }
+                          helper={`${
+                            pool_details.pool_data?.attributes?.transactions
+                              ?.h24?.sells! ?? "-"
+                          }`}
                         />
                       </div>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <div className="grid grid-cols-1 gap-4">
                         <StatCard
                           title={"24H PRICE CHANGE PERCENT"}
@@ -260,7 +282,7 @@ const PoolDashboard = ({ pool_details }: Props) => {
                   </div>
                 </div>
                 <div className="lg:w-2/3">
-                  <div className="border-secondary_background bg-secondary_background h-[420px] overflow-hidden rounded-xl border-2">
+                  <div className="h-[420px] overflow-hidden rounded-xl border-2 border-secondary_background bg-secondary_background">
                     <PoolChartWidget
                       address={pool_details.pool_info?.pairAddress!}
                     />
@@ -269,8 +291,8 @@ const PoolDashboard = ({ pool_details }: Props) => {
               </div>
               <div className="flex w-full flex-col gap-5 text-white lg:flex-row">
                 <div className="lg:w-1/2">
-                  <div className="bg-secondary_background w-full rounded-xl p-3">
-                    <div className="flex flex-row justify-between">
+                  <div className="w-full rounded-xl bg-secondary_background p-3">
+                    <div className="flex flex-row justify-between gap-3">
                       <Link
                         href={`/tokens/ethereum/${pool_details.base_token_info?.address!}`}
                       >
@@ -288,12 +310,17 @@ const PoolDashboard = ({ pool_details }: Props) => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <div className="flex flex-row items-center gap-1">
-                              <h1 className="text-xl font-bold">
+                            <div className="group relative">
+                              <div className="flex flex-row items-center gap-1">
+                                <h1 className="line-clamp-1 text-base font-bold lg:line-clamp-none lg:text-xl">
+                                  {pool_details.base_token_info?.name! ?? ""}
+                                </h1>
+                              </div>
+                              <div className="pointer-events-none absolute left-1/2 top-full mb-1 w-full -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                                 {pool_details.base_token_info?.name! ?? ""}
-                              </h1>
+                              </div>
                             </div>
-                            <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
+                            <div className="flex max-w-[50%] items-center justify-center rounded-md bg-primary_foreground p-[1px]">
                               <p className="text-xs font-medium text-blue-300">
                                 {pool_details.base_token_info?.symbol! ?? ""}
                               </p>
@@ -301,25 +328,33 @@ const PoolDashboard = ({ pool_details }: Props) => {
                           </div>
                         </div>
                       </Link>
-                      <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
-                        <p className="text-lg font-semibold text-blue-300">
-                          $
-                          {formatNumber(
-                            Number(
+                      <div className="flex items-center justify-center rounded-xl bg-primary_foreground px-2">
+                        <div className="group relative">
+                          <p className="text-lg font-semibold text-blue-300">
+                            $
+                            {formatNumber(
+                              Number(
+                                pool_details.pool_data?.attributes
+                                  ?.base_token_price_usd!
+                              )
+                            ) ?? "0"}
+                          </p>
+                          <div className="pointer-events-none absolute left-1/2 top-full mb-1 min-w-32 -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+                            {`$${
                               pool_details.pool_data?.attributes
-                                ?.base_token_price_usd!
-                            )
-                          ) ?? ""}
-                        </p>
+                                ?.base_token_price_usd! ?? "-"
+                            }`}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <p className="text-xs font-semibold">TOKEN ADDRESS</p>
-                      <p className="mt-2 text-xs text-blue-300">
+                      <p className="mt-2 line-clamp-1 text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
                         {pool_details.base_token_info?.address!}
                       </p>
                     </div>
-                    <div className="border-primary_foreground mt-2 rounded-xl border-[1px] p-2">
+                    <div className="mt-2 rounded-xl border-[1px] border-primary_foreground p-2">
                       <div className="flex flex-row gap-2">
                         <Link
                           href={`https://etherscan.io/token/${pool_details.base_token_info?.address!}`}
@@ -338,8 +373,8 @@ const PoolDashboard = ({ pool_details }: Props) => {
                   </div>
                 </div>
                 <div className="lg:w-1/2">
-                  <div className="bg-secondary_background w-full rounded-xl p-3">
-                    <div className="flex flex-row justify-between">
+                  <div className="w-full rounded-xl bg-secondary_background p-3">
+                    <div className="flex flex-row justify-between gap-3">
                       <Link
                         href={`/tokens/ethereum/${pool_details.quote_token_info?.address!}`}
                       >
@@ -357,12 +392,17 @@ const PoolDashboard = ({ pool_details }: Props) => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <div className="flex flex-row items-center gap-1">
-                              <h1 className="text-xl font-bold">
+                            <div className="group relative">
+                              <div className="flex flex-row items-center gap-1">
+                                <h1 className="line-clamp-1 text-base font-bold lg:line-clamp-none lg:text-xl">
+                                  {pool_details.quote_token_info?.name! ?? ""}
+                                </h1>
+                              </div>
+                              <div className="pointer-events-none absolute left-1/2 top-full mb-1 w-full -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                                 {pool_details.quote_token_info?.name! ?? ""}
-                              </h1>
+                              </div>
                             </div>
-                            <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
+                            <div className="flex max-w-[50%] items-center justify-center rounded-md bg-primary_foreground p-[1px]">
                               <p className="text-xs font-medium text-blue-300">
                                 {pool_details.quote_token_info?.symbol! ?? ""}
                               </p>
@@ -370,25 +410,33 @@ const PoolDashboard = ({ pool_details }: Props) => {
                           </div>
                         </div>
                       </Link>
-                      <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
-                        <p className="text-lg font-semibold text-blue-300">
-                          $
-                          {formatNumber(
-                            Number(
+                      <div className="flex items-center justify-center rounded-xl bg-primary_foreground px-2">
+                        <div className="group relative">
+                          <p className="text-lg font-semibold text-blue-300">
+                            $
+                            {formatNumber(
+                              Number(
+                                pool_details.pool_data?.attributes
+                                  ?.quote_token_price_usd!
+                              )
+                            ) ?? "0"}
+                          </p>
+                          <div className="pointer-events-none absolute left-1/2 top-full mb-1 min-w-32 -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+                            {`$${
                               pool_details.pool_data?.attributes
-                                ?.quote_token_price_usd!
-                            )
-                          ) ?? ""}
-                        </p>
+                                ?.quote_token_price_usd! ?? "-"
+                            }`}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <p className="text-xs font-semibold">TOKEN ADDRESS</p>
-                      <p className="mt-2 text-xs text-blue-300">
+                      <p className="mt-2 line-clamp-1 text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
                         {pool_details.quote_token_info?.address!}
                       </p>
                     </div>
-                    <div className="border-primary_foreground mt-2 rounded-xl border-[1px] p-2">
+                    <div className="mt-2 rounded-xl border-[1px] border-primary_foreground p-2">
                       <div className="flex flex-row gap-2">
                         <Link
                           href={`https://etherscan.io/token/${pool_details.quote_token_info?.address!}`}

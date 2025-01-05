@@ -92,7 +92,7 @@ const TokenDashboard = ({ token_details }: Props) => {
 
   return (
     <>
-      <div className="bg-primary_background mb-5 flex min-h-screen w-full items-start justify-start font-[family-name:var(--font-geist-mono)] text-base text-white">
+      <div className="mb-5 flex min-h-screen w-full items-start justify-start bg-primary_background font-[family-name:var(--font-geist-mono)] text-base text-white">
         <div className="relative w-full">
           <div className="px-10 md:px-16 2xl:px-64">
             <div className="flex flex-col gap-3">
@@ -108,8 +108,8 @@ const TokenDashboard = ({ token_details }: Props) => {
                   </div>
                 </>
               )}
-              <div className="bg-secondary_background flex flex-col gap-3 rounded-xl px-3 py-2">
-                <div className="flex flex-row justify-between">
+              <div className="flex flex-col gap-3 rounded-xl bg-secondary_background px-3 py-2">
+                <div className="flex flex-row justify-between gap-3">
                   <div className="flex flex-row items-center gap-3">
                     <div className="flex-shrink-0 rounded-full bg-white">
                       <Image
@@ -121,34 +121,45 @@ const TokenDashboard = ({ token_details }: Props) => {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <div className="flex flex-row items-center gap-1">
-                        <h1 className="text-lg font-bold lg:text-xl">
+                      <div className="group relative">
+                        <div className="flex flex-row items-center gap-1">
+                          <h1 className="line-clamp-1 text-base font-bold lg:line-clamp-none lg:text-xl">
+                            {token_details.token_data?.name! ?? ""}
+                          </h1>
+                          {token_details.token_data?.verified_contract && (
+                            <div className="text-xl">
+                              <VerifiedBadge className="text-blue-300" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="pointer-events-none absolute left-1/2 top-full mb-1 w-full -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                           {token_details.token_data?.name! ?? ""}
-                        </h1>
-                        {token_details.token_data?.verified_contract ? (
-                          <VerifiedBadge
-                            className="text-blue-300"
-                            size="1rem"
-                          />
-                        ) : null}
+                        </div>
                       </div>
-                      <div className="bg-primary_foreground flex max-w-[50%] items-center justify-center rounded-md p-[1px]">
-                        <p className="text-xs font-medium text-blue-300">
-                          {token_details.token_data?.symbol! ?? ""}
-                        </p>
+                      <div className="flex">
+                        <div className="items-center justify-center rounded-md bg-primary_foreground px-4 py-1">
+                          <p className="text-xs font-medium text-blue-300">
+                            {token_details.token_data?.symbol! ?? ""}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-primary_foreground flex items-center justify-center rounded-xl px-2">
-                    <p className="text-lg font-semibold text-blue-300">
-                      $
-                      {formatNumber(
-                        Number(token_details.token_attributes?.price_usd!)
-                      ) ?? ""}
-                    </p>
+                  <div className="flex items-center justify-center rounded-xl bg-primary_foreground px-2">
+                    <div className="group relative">
+                      <p className="text-lg font-semibold text-blue-300">
+                        $
+                        {formatNumber(
+                          Number(token_details.token_attributes?.price_usd!)
+                        ) ?? "0"}
+                      </p>
+                      <div className="pointer-events-none absolute left-1/2 top-full mb-1 min-w-32 -translate-x-1/2 transform rounded bg-white px-2 text-center text-[11px] font-medium text-black opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+                        {`$${token_details.token_attributes?.price_usd! ?? "-"}`}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="border-primary_foreground flex items-center justify-between rounded-lg border-[1px] px-3 py-2">
+                <div className="flex items-center justify-between rounded-lg border-[1px] border-primary_foreground px-3 py-2">
                   <div className="flex flex-row gap-2">
                     <Link
                       href={`https://etherscan.io/token/${token_details.token_data?.address!}`}
@@ -210,7 +221,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
                     <p className="text-[10px] text-gray-200">SECURITY SCORE</p>
-                    <div className="bg-primary_foreground rounded-lg px-3 py-1">
+                    <div className="rounded-lg bg-primary_foreground px-3 py-1">
                       <p className="text-xs">
                         {token_details.token_data?.security_score ?? ""} / 100
                       </p>
@@ -220,84 +231,94 @@ const TokenDashboard = ({ token_details }: Props) => {
               </div>
               <div className="flex w-full flex-col gap-5 text-white lg:flex-row">
                 <div className="lg:w-1/3">
-                  <div className="bg-secondary_background w-full rounded-xl p-3">
+                  <div className="w-full rounded-xl bg-secondary_background p-3">
                     <h1 className="text-base font-bold">Token details</h1>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
-                      <p className="text-[10px] font-semibold">TOKEN ADDRESS</p>
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
+                      <p className="text-xs font-semibold">TOKEN ADDRESS</p>
                       <p className="text-[10px] text-blue-300 lg:text-[10px] xl:text-xs">
                         {token_details.token_data?.address!}
                       </p>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
                         <StatCard
                           title={"MARKET CAP"}
                           symbol={"$"}
                           value={
                             token_details.token_attributes?.market_cap_usd! ??
-                            ""
+                            "0"
                           }
+                          helper={`$${token_details.token_attributes?.market_cap_usd! ?? "-"}`}
                         />
                         <StatCard
                           title={"HOLDERS"}
                           symbol={""}
                           value={
-                            token_details.token_security?.holder_count! ?? ""
+                            token_details.token_security?.holder_count! ?? "0"
                           }
+                          helper={`${token_details.token_security?.holder_count! ?? "-"}`}
                         />
                         <StatCard
                           title={"TOTAL SUPPLY"}
                           symbol={"$"}
                           value={
                             token_details.token_data?.total_supply_formatted! ??
-                            ""
+                            "0"
                           }
+                          helper={`$${token_details.token_data?.total_supply_formatted! ?? "-"}`}
                         />
                         <StatCard
                           title={"FDV"}
                           symbol={"$"}
                           value={
                             token_details.token_data
-                              ?.fully_diluted_valuation! ?? ""
+                              ?.fully_diluted_valuation! ?? "0"
                           }
+                          helper={`$${
+                            token_details.token_data
+                              ?.fully_diluted_valuation!! ?? "-"
+                          }`}
                         />
                         <StatCard
                           title={"LP SUPPLY"}
                           symbol={"$"}
                           value={
-                            token_details.token_security?.lp_total_supply! ?? ""
+                            token_details.token_security?.lp_total_supply! ??
+                            "0"
                           }
+                          helper={`$${token_details.token_security?.lp_total_supply! ?? "-"}`}
                         />
                         <StatCard
                           title={"24H VOL"}
                           symbol={"$"}
                           value={
                             token_details.token_attributes?.volume_usd?.h24! ??
-                            ""
+                            "0"
                           }
+                          helper={`$${token_details.token_attributes?.volume_usd?.h24! ?? "-"}`}
                         />
                       </div>
                     </div>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       <div className="grid grid-cols-2 gap-4">
                         <StatCard
                           title={"BUY TAX"}
                           symbol={""}
-                          value={token_details.token_security?.buy_tax!}
+                          value={token_details.token_security?.buy_tax! ?? "0"}
                         />
                         <StatCard
                           title={"SELL TAX"}
                           symbol={""}
-                          value={token_details.token_security?.sell_tax!}
+                          value={token_details.token_security?.sell_tax! ?? "0"}
                         />
                       </div>
                     </div>
                   </div>
-                  <div className="bg-secondary_background mt-3 w-full rounded-xl p-3">
+                  <div className="mt-3 w-full rounded-xl bg-secondary_background p-3">
                     <h1 className="text-base font-bold">
                       Token security details
                     </h1>
-                    <div className="bg-primary_foreground mt-2 rounded-xl p-2">
+                    <div className="mt-2 rounded-xl bg-primary_foreground p-2">
                       {tokenSecurityStats.map((security_stat, index) => (
                         <div key={index}>
                           <SecurityStatCard
@@ -310,15 +331,15 @@ const TokenDashboard = ({ token_details }: Props) => {
                   </div>
                 </div>
                 <div className="lg:w-2/3">
-                  <div className="border-secondary_background bg-secondary_background h-[280px] overflow-hidden rounded-xl border-2 md:h-[420px]">
+                  <div className="h-[280px] overflow-hidden rounded-xl border-2 border-secondary_background bg-secondary_background md:h-[420px]">
                     <TokenChartWidget
                       symbol={`${token_details.token_data?.symbol}`}
                       timeline={"D"}
                     />
                   </div>
-                  <div className="bg-secondary_background mt-3 w-full rounded-xl p-3">
+                  <div className="mt-3 w-full rounded-xl bg-secondary_background p-3">
                     <h1 className="text-base font-bold">Token description</h1>
-                    <div className="bg-primary_foreground mt-2 min-h-[120px] rounded-xl p-2 lg:min-h-[190px] xl:min-h-[180px] 2xl:min-h-[192px]">
+                    <div className="mt-2 min-h-[120px] rounded-xl bg-primary_foreground p-2 lg:min-h-[190px] xl:min-h-[180px] 2xl:min-h-[192px]">
                       <p className="text-xs">
                         {token_details.token_info?.description}
                       </p>
@@ -326,7 +347,7 @@ const TokenDashboard = ({ token_details }: Props) => {
                   </div>
                 </div>
               </div>
-              <div className="bg-secondary_background w-full rounded-xl p-3">
+              <div className="w-full rounded-xl bg-secondary_background p-3">
                 <h1 className="text-base font-bold">
                   Token pool pairs — [Top 10]
                 </h1>

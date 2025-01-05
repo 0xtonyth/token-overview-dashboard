@@ -15,7 +15,7 @@ const TokenPoolTable = ({ token_pair_data }: Props) => {
   const router = useRouter();
   return (
     <>
-      <div className="border-primary_foreground overflow-y-hidden rounded-xl border-[1px] text-white">
+      <div className="overflow-y-hidden rounded-xl border-[1px] border-primary_foreground text-white">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -31,7 +31,7 @@ const TokenPoolTable = ({ token_pair_data }: Props) => {
               {token_pair_data.map((token_pair, index) => (
                 <tr
                   key={index}
-                  className="hover:bg-primary_background cursor-pointer transition-all duration-200 hover:text-blue-300"
+                  className="cursor-pointer transition-all duration-200 hover:bg-primary_background hover:text-blue-300"
                   onClick={() =>
                     router.push(`/pools/ethereum/${token_pair.pair_address!}`)
                   }
@@ -42,21 +42,34 @@ const TokenPoolTable = ({ token_pair_data }: Props) => {
                     </p>
                   </td>
                   <td className="px-5 py-2 text-sm">
-                    <p className="whitespace-no-wrap">
-                      ${formatNumber(token_pair.liquidity_usd!) ?? ""}
-                    </p>
+                    {token_pair.liquidity_usd ? (
+                      <p className="whitespace-no-wrap">
+                        ${formatNumber(token_pair.liquidity_usd! ?? "0")}
+                      </p>
+                    ) : (
+                      "-"
+                    )}
                   </td>
                   <td className="px-5 py-2 text-sm">
-                    <p className="whitespace-no-wrap">
-                      ${formatNumber(token_pair.volume_24h_usd!) ?? ""}
-                    </p>
+                    {token_pair.volume_24h_usd ? (
+                      <p className="whitespace-no-wrap">
+                        ${formatNumber(token_pair.volume_24h_usd! ?? "0")}
+                      </p>
+                    ) : (
+                      "-"
+                    )}
                   </td>
                   <td className="px-5 py-2 text-sm">
-                    <p className="whitespace-no-wrap">
-                      $
-                      {formatNumber(token_pair.usd_price_24hr_usd_change!) ??
-                        ""}
-                    </p>
+                    {token_pair.usd_price_24hr_usd_change ? (
+                      <p className="whitespace-no-wrap">
+                        $
+                        {formatNumber(
+                          token_pair.usd_price_24hr_usd_change! ?? "0"
+                        )}
+                      </p>
+                    ) : (
+                      "-"
+                    )}
                   </td>
                   <td className="px-5 py-2 text-sm">
                     <div className="flex items-center">

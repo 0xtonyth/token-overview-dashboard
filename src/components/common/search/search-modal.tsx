@@ -42,6 +42,7 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const [addressFound, setAddressFound] = useState<boolean>(true);
 
   const GECKOTERMINAL_API_URL = process.env.NEXT_PUBLIC_GECKOTERMINAL_API_URL;
 
@@ -50,6 +51,7 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
   const handleSearchChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setAddressFound(true);
     const searchTerm = event.target.value.trim();
 
     if (searchTerm.length) {
@@ -67,12 +69,16 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
 
           if (response.status === 200) {
             const searchResponse = response.data.data;
+
+            setAddressFound(true);
             setSearchResults([searchResponse]);
           } else {
             console.log(`Error ${response.status}`);
+            setAddressFound(false);
             setSearchResults([]);
           }
         } catch (error: any) {
+          setAddressFound(false);
           setSearchResults([]);
           if (error.response) {
             console.log("Error searching token or pool:", error.response.data);
@@ -125,13 +131,13 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
       >
         <DialogBackdrop
           transition
-          className="bg-secondary_background fixed inset-0 bg-opacity-75 transition-opacity"
+          className="fixed inset-0 bg-secondary_background bg-opacity-75 transition-opacity"
         />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
             <DialogPanel
               transition
-              className="bg-primary_foreground relative min-h-[320px] w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl"
+              className="relative min-h-[320px] w-full transform overflow-hidden rounded-lg bg-primary_foreground text-left shadow-xl transition-all sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl"
             >
               <div
                 className="absolute right-4 mt-4 cursor-pointer self-end p-1"
@@ -151,7 +157,7 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                   </div>
                   <div className="mx-auto mt-5 flex w-full flex-row gap-3">
                     <select
-                      className="bg-primary_background rounded-lg px-3 py-2 text-white shadow-sm outline-none"
+                      className="rounded-lg bg-primary_background px-3 py-2 text-white shadow-sm outline-none"
                       name="options"
                       value={selectedOption}
                       onChange={handleSelectChange}
@@ -198,7 +204,7 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                     <>
                       {searchResults.length ? (
                         <>
-                          <div className="bg-secondary_foreground w-full rounded-lg px-3 py-2 text-black transition-all duration-200 hover:shadow-lg">
+                          <div className="w-full rounded-lg bg-secondary_foreground px-3 py-2 text-black transition-all duration-200 hover:shadow-lg">
                             <Link
                               href={`/${searchResults[0].type === "token" ? "tokens" : "pools"}/ethereum/${searchResults[0].attributes.address}`}
                             >
@@ -222,7 +228,17 @@ const SearchModal = ({ openModal, setOpenModal }: Props) => {
                             </Link>
                           </div>
                         </>
-                      ) : null}
+                      ) : (
+                        <>
+                          <div className="w-full">
+                            {!addressFound ? (
+                              <p className="text-center text-base font-medium">
+                                Nothing found!
+                              </p>
+                            ) : null}
+                          </div>
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
